@@ -5,6 +5,9 @@
 Unborking in little steps:
 
 - ~~Make it do SSL~~
+- ~~Print logs~~
+- ~~Serve assets, compile live if needed~~
+- ~~Use Thin, really~~
 - Have RssAgent grok more than one feed URL
 
 ## What is Huginn?
