@@ -134,7 +134,7 @@ Devise.setup do |config|
   if Rails.env.production?
     config.rememberable_options = { secure: true }
   else
-    config.rememberable_options = { }
+    config.rememberable_options = { secure: true }
   end
 
   # ==> Configuration for :validatable
