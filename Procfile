@@ -1,6 +1,7 @@
 # Procfile for development using the new threaded worker (scheduler, twitter stream and delayed job)
 web: bundle exec thin start --ssl --ssl-key-file /home/drbig/huginn/server.key --ssl-cert-file /home/drbig/huginn/server.crt --ssl-disable-verify -a 78.8.120.130 -p 7575
 jobs: bundle exec rails runner bin/threaded.rb
+log: tail -f log/*.log
 
 # Possible Profile configuration for production:
 # web: bundle exec unicorn -c config/unicorn/production.rb
