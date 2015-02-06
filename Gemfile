@@ -132,3 +132,6 @@ else
   gem 'unicorn', platform: :ruby_18
   gem 'rails_12factor', platform: :ruby_18
 end
+
+# Use Thin, really
+gem 'thin'
