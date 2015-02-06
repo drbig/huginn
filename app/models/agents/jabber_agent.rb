@@ -9,7 +9,8 @@ module Agents
       #{'## Include `xmpp4r` in your Gemfile to use this Agent!' if dependencies_missing?}
       The JabberAgent will send any events it receives to your Jabber/XMPP IM account.
 
-      Specify the `jabber_server` and `jabber_port` for your Jabber server.
+      Specify the `jabber_server` and `jabber_port` for your Jabber server, or leave them
+      empty and let xmpp4r figure out the details, e.g. for sending to GTalk.
 
       The `message` is sent from `jabber_sender` to `jaber_receiver`. This message
       can contain any keys found in the source's payload, escaped using double curly braces.
@@ -42,7 +43,7 @@ module Agents
     end
 
     def validate_options
-      errors.add(:base, "server and username is required") unless credentials_present?
+      errors.add(:base, "sender and receiver is required") unless credentials_present?
     end
 
     def deliver(text)
@@ -53,13 +54,17 @@ module Agents
 
     def client
       Jabber::Client.new(Jabber::JID::new(interpolated['jabber_sender'])).tap do |sender|
-        sender.connect(interpolated['jabber_server'], interpolated['jabber_port'] || '5222')
+        if options['jabber_server'].present?
+          sender.connect(interpolated['jabber_server'], interpolated['jabber_port'] || '5222')
+        else
+          sender.connect
+        end
         sender.auth interpolated['jabber_password']
       end
     end
 
     def credentials_present?
-      options['jabber_server'].present? && options['jabber_sender'].present? && options['jabber_receiver'].present?
+      options['jabber_sender'].present? && options['jabber_receiver'].present?
     end
 
     def body(event)
